@@ -1,7 +1,7 @@
 package com.douzone.mysite.vo;
 
 public class BoardListVo {
-
+	private Long rownum;
 	private Long no;
 	private String title;
 	private Long hit;
@@ -11,6 +11,15 @@ public class BoardListVo {
 	private Long depth;
 	private Long userNo;
 	private String userName;
+	
+	
+	
+	public Long getRownum() {
+		return rownum;
+	}
+	public void setRownum(Long rownum) {
+		this.rownum = rownum;
+	}
 	public Long getNo() {
 		return no;
 	}

@@ -16,8 +16,21 @@ public class ListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Long page = Long.parseLong(request.getParameter("page"));
 		
-		List<BoardListVo> list = new BoardDao().findBoardLsit();
+		if(page == 1) {
+			page=0L;
+		} else {
+			page = (page-1)*10;
+		}
+		
+		List<BoardListVo> list = new BoardDao().findBoardLsit(page);
+		Long totalQty = new BoardDao().findByQty();
+
+		double totalPage =Math.ceil((double)totalQty /10);
+		
+
+		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("list", list);
 		MvcUtil.forward("board/list", request, response);
 

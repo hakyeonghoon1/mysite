@@ -25,19 +25,46 @@ public class AddAction implements Action {
 			return;
 		}
 		
-		String title = request.getParameter("title");
-		String contents =request.getParameter("content");
+		if("".equals(request.getParameter("groupNo"))) {
+
+			String title = request.getParameter("title");
+			String contents =request.getParameter("content");
+			
+			Long userNo = authUser.getNo();
+			
+			BoardVo vo = new BoardVo();
+			vo.setTitle(title);
+			vo.setContents(contents);
+			vo.setUserNo(userNo);
+			
+			new BoardDao().insert(vo);
+			MvcUtil.redirect(request.getContextPath()+"/board", request, response);
+			
+		} else if(request.getParameter("groupNo") != null){	
+			
+			Long groupNo = Long.parseLong(request.getParameter("groupNo"));
+			Long orderNo = Long.parseLong(request.getParameter("orderNo"));
+			Long depth = Long.parseLong(request.getParameter("depth"));
+			String title = request.getParameter("title");
+			String contents =request.getParameter("content");
+			Long userNo = authUser.getNo();
+			
+			BoardVo vo = new BoardVo();
+
+			vo.setGroupNo(groupNo);
+			vo.setOrderNo(orderNo);
+			vo.setDepth(depth);
+			vo.setTitle(title);
+			vo.setContents(contents);
+			vo.setUserNo(userNo);
+			
+			new BoardDao().updateNo(vo);
+			
+			new BoardDao().insertReply(vo);
+			
+			MvcUtil.redirect(request.getContextPath()+"/board", request, response);
+		}
 		
-		Long userNo = authUser.getNo();
-		
-		BoardVo vo = new BoardVo();
-		vo.setTitle(title);
-		vo.setContents(contents);
-		vo.setUserNo(userNo);
-		
-		new BoardDao().insert(vo);
-		
-		MvcUtil.redirect(request.getContextPath()+"/board", request, response);
 
 	}
 

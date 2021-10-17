@@ -16,9 +16,10 @@ public class ListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		Long page = Long.parseLong(request.getParameter("page"));
-		
-		if(page == 1) {
+
+		if(page == 1 || page==null) {
 			page=0L;
 		} else {
 			page = (page-1)*10;

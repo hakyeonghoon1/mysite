@@ -38,7 +38,7 @@ public class AddAction implements Action {
 			vo.setUserNo(userNo);
 			
 			new BoardDao().insert(vo);
-			MvcUtil.redirect(request.getContextPath()+"/board", request, response);
+			MvcUtil.redirect(request.getContextPath()+"/board?page=1", request, response);
 			
 		} else if(request.getParameter("groupNo") != null){	
 			
@@ -62,7 +62,7 @@ public class AddAction implements Action {
 			
 			new BoardDao().insertReply(vo);
 			
-			MvcUtil.redirect(request.getContextPath()+"/board", request, response);
+			MvcUtil.redirect(request.getContextPath()+"/board?page=1", request, response);
 		}
 		
 

@@ -12,17 +12,14 @@ import com.douzone.mysite.vo.BoardListVo;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.util.MvcUtil;
 
-public class ListAction implements Action {
+public class FindByTitleAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String keyword = request.getParameter("kwd");
-
-		if(keyword==null) {
-			keyword="";
-		}
-		Long page = Long.parseLong(request.getParameter("page"));
+		
+		Long page = 1L;
 
 		if(page == 1 || page==null) {
 			page=0L;
@@ -32,11 +29,10 @@ public class ListAction implements Action {
 		
 		List<BoardListVo> list = new BoardDao().findByTitle(keyword, page);
 		Long totalQty = new BoardDao().findByTitleQty(keyword);
-		System.out.println(totalQty);
-		double totalPage =Math.ceil((double)totalQty /10);
-		System.out.println(totalPage);
 
-		request.setAttribute("kwd", keyword);
+		double totalPage =Math.ceil((double)totalQty /10);
+		
+
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("list", list);
 		MvcUtil.forward("board/list", request, response);

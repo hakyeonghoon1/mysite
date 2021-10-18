@@ -16,7 +16,10 @@ public class FindByTitleAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		/** 안씀. 혹시 몰라서 안 지움
+		 * 
+		 * 
+		 * 
 		String keyword = request.getParameter("kwd");
 		
 		Long page = 1L;
@@ -36,7 +39,7 @@ public class FindByTitleAction implements Action {
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("list", list);
 		MvcUtil.forward("board/list", request, response);
-
+		 */
 	}
 
 }

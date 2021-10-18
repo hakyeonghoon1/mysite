@@ -75,8 +75,8 @@
 									</c:choose>
 								</c:forEach>							
 							</c:when>
-							<c:when test="${param.page >=5 && param.page >= totalPage}">
-								<c:forEach begin='${totalPage-3}' end='${totalPage }' var='pageNum'>
+							<c:when test="${param.page >=5 && param.page==totalPage }">
+								<c:forEach begin='${param.page-4}' end='${totalPage }' var='pageNum'>
 									<c:choose>
 										<c:when test="${pageNum == param.page }">
 											<li class="selected"><a href="${pageContext.request.contextPath }/board?page=${pageNum }&kwd=${kwd }">${pageNum }</a></li>
@@ -87,8 +87,20 @@
 									</c:choose>
 								</c:forEach>							
 							</c:when>
-							<c:when test="${param.page >=5 && param.page < totalPage}">
-								<c:forEach begin='${totalPage-3}' end='${totalPage }' var='pageNum'>
+							<c:when test="${param.page >=5 && param.page+2>totalPage }">
+								<c:forEach begin='${param.page-3}' end='${totalPage }' var='pageNum'>
+									<c:choose>
+										<c:when test="${pageNum == param.page }">
+											<li class="selected"><a href="${pageContext.request.contextPath }/board?page=${pageNum }&kwd=${kwd }">${pageNum }</a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a href="${pageContext.request.contextPath }/board?page=${pageNum }&kwd=${kwd }">${pageNum }</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>							
+							</c:when>
+							<c:when test="${param.page >=5 && param.page < totalPage }">
+								<c:forEach begin='${param.page-2}' end='${param.page+2 }' var='pageNum'>
 									<c:choose>
 										<c:when test="${pageNum == param.page }">
 											<li class="selected"><a href="${pageContext.request.contextPath }/board?page=${pageNum }&kwd=${kwd }">${pageNum }</a></li>

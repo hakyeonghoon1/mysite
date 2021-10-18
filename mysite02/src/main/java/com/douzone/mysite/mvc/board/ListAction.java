@@ -32,9 +32,9 @@ public class ListAction implements Action {
 		
 		List<BoardListVo> list = new BoardDao().findByTitle(keyword, page);
 		Long totalQty = new BoardDao().findByTitleQty(keyword);
-		System.out.println(totalQty);
+		//System.out.println(totalQty);
 		double totalPage =Math.ceil((double)totalQty /10);
-		System.out.println(totalPage);
+		//System.out.println(totalPage);
 
 		request.setAttribute("kwd", keyword);
 		request.setAttribute("totalPage", totalPage);

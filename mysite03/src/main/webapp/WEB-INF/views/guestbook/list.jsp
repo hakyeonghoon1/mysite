@@ -2,9 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	pageContext.setAttribute("newline", "\n");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,8 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="guestbook">
-				<form action="${pageContext.request.contextPath }/guestbook?a=add" method="post">
-					<input type="hidden" name="a" value="insert">
+				<form action="${pageContext.request.contextPath }/guestbook/add" method="post">
 					<table>
 						<tr>
 							<td>이름</td><td><input type="text" name="name"></td>
@@ -41,7 +37,7 @@
 									<td>[${count - status.index }]</td>
 									<td>${vo.name }</td>
 									<td>${vo.regDate }</td>
-									<td><a href="${pageContext.request.contextPath }/guestbook?a=deleteform&no=${vo.no}">삭제</a></td>
+									<td><a href="${pageContext.request.contextPath }/guestbook/delete/${vo.no}">삭제</a></td>
 								</tr>
 								<tr>
 									<td colspan=4>

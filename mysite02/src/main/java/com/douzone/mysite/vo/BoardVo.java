@@ -1,6 +1,7 @@
 package com.douzone.mysite.vo;
 
 public class BoardVo {
+	private Long rownum;
 	private Long no;
 	private String title;
 	private String contents;
@@ -9,7 +10,21 @@ public class BoardVo {
 	private Long groupNo;
 	private Long orderNo;
 	private Long depth;
+	
+	public Long getRownum() {
+		return rownum;
+	}
+	public void setRownum(Long rownum) {
+		this.rownum = rownum;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	private Long userNo;
+	private String userName;
 	
 	public Long getNo() {
 		return no;

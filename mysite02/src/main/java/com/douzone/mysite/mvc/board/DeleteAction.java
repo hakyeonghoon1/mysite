@@ -26,8 +26,15 @@ public class DeleteAction implements Action {
 		}
 		
 		Long no = Long.parseLong(request.getParameter("no"));
+		
 		BoardVo vo = new BoardVo();
 		vo.setNo(no);
+		BoardVo boardVo = new BoardDao().findByNo(no);
+		if( authUser.getNo() != boardVo.getUserNo()) {
+			MvcUtil.redirect(request.getContextPath(), request, response);
+			return;
+		}
+
 		new BoardDao().delete(vo);
 		
 		MvcUtil.redirect(request.getContextPath()+"/board?page=1", request, response);

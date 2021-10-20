@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.douzone.mysite.dao.BoardDao;
-import com.douzone.mysite.vo.BoardListVo;
+import com.douzone.mysite.vo.BoardVo;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.util.MvcUtil;
 
@@ -30,7 +30,7 @@ public class ListAction implements Action {
 			page = (page-1)*10;
 		}
 		
-		List<BoardListVo> list = new BoardDao().findByTitle(keyword, page);
+		List<BoardVo> list = new BoardDao().findByTitle(keyword, page);
 		Long totalQty = new BoardDao().findByTitleQty(keyword);
 		//System.out.println(totalQty);
 		double totalPage =Math.ceil((double)totalQty /10);

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.douzone.mysite.vo.BoardListVo;
+import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.BoardVo;
 
 public class BoardDao {
@@ -81,9 +81,9 @@ public class BoardDao {
 		return result;
 	}
 	
-	public List<BoardListVo> findByTitle(String keyword, Long page) {
+	public List<BoardVo> findByTitle(String keyword, Long page) {
 		
-		List<BoardListVo> result = new ArrayList<>();
+		List<BoardVo> result = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
 		Connection conn = null;
@@ -127,7 +127,7 @@ public class BoardDao {
 				String userName = rs.getString(9);
 				Long rownum = rs.getLong(10);
 							
-				BoardListVo vo = new BoardListVo();
+				BoardVo vo = new BoardVo();
 				vo.setNo(no);
 				vo.setTitle(title);
 				vo.setHit(hit);
@@ -261,9 +261,9 @@ public class BoardDao {
 		return result;
 	}
 	
-	public List<BoardListVo> findBoardLsit(Long page) {
+	public List<BoardVo> findBoardLsit(Long page) {
 		
-		List<BoardListVo> result = new ArrayList<>();
+		List<BoardVo> result = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
 		Connection conn = null;
@@ -304,7 +304,7 @@ public class BoardDao {
 				String userName = rs.getString(9);
 				Long rownum = rs.getLong(10);
 							
-				BoardListVo vo = new BoardListVo();
+				BoardVo vo = new BoardVo();
 				vo.setNo(no);
 				vo.setTitle(title);
 				vo.setHit(hit);

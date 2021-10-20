@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.douzone.mysite.repository.BoardRepository;
-import com.douzone.mysite.vo.BoardListVo;
 import com.douzone.mysite.vo.BoardVo;
 
 @Service
@@ -15,7 +14,7 @@ public class BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
 
-	public List<BoardListVo> getList(String kwd, Long page) {
+	public List<BoardVo> getList(String kwd, Long page) {
 		if(kwd ==null) {
 			kwd="";
 		}
@@ -62,6 +61,11 @@ public class BoardService {
 
 	public void delete(BoardVo vo) {
 		boardRepository.delete(vo);
+		
+	}
+
+	public void updatehit(Long no) {
+		boardRepository.updateHit(no);
 		
 	}
 }

@@ -2,6 +2,9 @@ package com.douzone.mysite.controller;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.douzone.mysite.service.BoardService;
-import com.douzone.mysite.vo.BoardListVo;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
 
@@ -27,7 +29,7 @@ public class BoardController {
 	@RequestMapping("")
 	public String list(String kwd, Long page, Model model) {
 
-		List<BoardListVo> list = boardService.getList(kwd,page);
+		List<BoardVo> list = boardService.getList(kwd,page);
 		Long totalQty = boardService.getTotalQty(kwd);
 		double totalPage = Math.ceil((double)totalQty/10);
 		model.addAttribute("list", list);
@@ -92,7 +94,28 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/view/{no}")
-	public String view(@PathVariable("no") Long no, Model model) {
+	public String view(@PathVariable("no") Long no, Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+		Cookie[] cookies = request.getCookies();
+		int count = 0;
+		System.out.println(count);
+		if(cookies != null && cookies.length>0) {
+			for(Cookie cookie :cookies) {
+				System.out.println(cookie.getName());
+				if(("HIT"+no).equals(cookie.getName())) {
+					count=1;
+				}
+			}
+		}
+		System.out.println(count);
+		if(count==0) {
+			boardService.updatehit(no);
+			// 쿠키 쓰기
+			Cookie cookie = new Cookie("HIT"+no, String.valueOf(1));
+			cookie.setPath(request.getContextPath());
+			cookie.setMaxAge(24*60*60);//1day
+			response.addCookie(cookie);
+		} 
 		
 		BoardVo vo = boardService.findByNo(no);
 		

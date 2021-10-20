@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.douzone.mysite.vo.BoardListVo;
 import com.douzone.mysite.vo.BoardVo;
 
 @Repository
@@ -84,9 +83,9 @@ public class BoardRepository {
 		return result;
 	}
 	
-	public List<BoardListVo> findByTitle(String keyword, Long page) {
+	public List<BoardVo> findByTitle(String keyword, Long page) {
 		
-		List<BoardListVo> result = new ArrayList<>();
+		List<BoardVo> result = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
 		Connection conn = null;
@@ -130,7 +129,7 @@ public class BoardRepository {
 				String userName = rs.getString(9);
 				Long rownum = rs.getLong(10);
 							
-				BoardListVo vo = new BoardListVo();
+				BoardVo vo = new BoardVo();
 				vo.setNo(no);
 				vo.setTitle(title);
 				vo.setHit(hit);
@@ -264,9 +263,9 @@ public class BoardRepository {
 		return result;
 	}
 	
-	public List<BoardListVo> findBoardLsit(Long page) {
+	public List<BoardVo> findBoardLsit(Long page) {
 		
-		List<BoardListVo> result = new ArrayList<>();
+		List<BoardVo> result = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
 		Connection conn = null;
@@ -307,7 +306,7 @@ public class BoardRepository {
 				String userName = rs.getString(9);
 				Long rownum = rs.getLong(10);
 							
-				BoardListVo vo = new BoardListVo();
+				BoardVo vo = new BoardVo();
 				vo.setNo(no);
 				vo.setTitle(title);
 				vo.setHit(hit);

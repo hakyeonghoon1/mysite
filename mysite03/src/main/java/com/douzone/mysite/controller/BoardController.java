@@ -98,16 +98,16 @@ public class BoardController {
 		
 		Cookie[] cookies = request.getCookies();
 		int count = 0;
-		System.out.println(count);
+
 		if(cookies != null && cookies.length>0) {
 			for(Cookie cookie :cookies) {
-				System.out.println(cookie.getName());
+
 				if(("HIT"+no).equals(cookie.getName())) {
 					count=1;
 				}
 			}
 		}
-		System.out.println(count);
+
 		if(count==0) {
 			boardService.updatehit(no);
 			// 쿠키 쓰기

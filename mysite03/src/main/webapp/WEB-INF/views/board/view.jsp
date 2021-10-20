@@ -34,10 +34,10 @@
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board?page=1">글목록</a>
 					<c:if test="${vo.userNo == authUser.no }">
-						<a href="${pageContext.request.contextPath }/board?a=updateform&no=${vo.no }&userNo=${vo.userNo }">글수정</a>
+						<a href="${pageContext.request.contextPath }/board/update/${vo.no }/${vo.userNo }">글수정</a>
 					</c:if>
 					<c:if test="${authUser != null }">
-						<a href="${pageContext.request.contextPath }/board?a=writereplyform&groupno=${vo.groupNo }&orderno=${vo.orderNo }&depth=${vo.depth }&no=${vo.no}">답글작성</a>
+						<a href="${pageContext.request.contextPath }/board/reply/${vo.groupNo }/${vo.orderNo }/${vo.depth }/${vo.no}">답글작성</a>
 					</c:if>
 				</div>
 			</div>

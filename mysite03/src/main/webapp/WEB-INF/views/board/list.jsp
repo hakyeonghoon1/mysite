@@ -14,7 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath }/board?a=list&page=1" method="post">
+				<form id="search_form" action="${pageContext.request.contextPath }/board?page=1" method="post">
 					<input type="text" id="kwd" name="kwd" >
 					<input type="submit" value="찾기">
 				</form>
@@ -36,13 +36,13 @@
 									<c:if test="${vo.depth>0 }">
 										<img src='${pageContext.request.contextPath }/assets/images/reply.png'/>
 									</c:if>
-									<a href="${pageContext.request.contextPath }/board?a=viewform&no=${vo.no }">${vo.title }</a>
+									<a href="${pageContext.request.contextPath }/board/view/${vo.no }">${vo.title }</a>
 								</td>
 								<td>${vo.userName }</td>
 								<td>${vo.hit }</td>
 								<td>${vo.regDate }</td>
 								<c:if test="${authUser.no == vo.userNo }">
-									<td><a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no }" class="del">삭제</a></td>
+									<td><a href="${pageContext.request.contextPath }/board/delete/${vo.no }" class="del">삭제</a></td>
 								</c:if>
 							</tr>
 						</c:forEach>
@@ -155,7 +155,7 @@
 				
 				<div class="bottom">
 					<c:if test="${!empty authUser }">
-						<a href="${pageContext.request.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath }/board/write" id="new-book">글쓰기</a>
 					</c:if>
 				</div>				
 			</div>

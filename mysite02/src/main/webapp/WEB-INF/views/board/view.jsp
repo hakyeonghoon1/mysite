@@ -32,7 +32,7 @@
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board?page=1">글목록</a>
+					<a href="${pageContext.request.contextPath }/board?page=${param.page }">글목록</a>
 					<c:if test="${vo.userNo == authUser.no }">
 						<a href="${pageContext.request.contextPath }/board?a=updateform&no=${vo.no }&userNo=${vo.userNo }">글수정</a>
 					</c:if>

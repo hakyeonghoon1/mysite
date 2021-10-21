@@ -93,15 +93,16 @@ public class BoardController {
 		return "redirect:/board?page=1";
 	}
 	
-	@RequestMapping("/view/{no}")
-	public String view(@PathVariable("no") Long no, Model model, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping("/view/{no}/{page}")
+	public String view(@PathVariable("no") Long no, @PathVariable("page") Long page,
+			Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		Cookie[] cookies = request.getCookies();
 		int count = 0;
-
+		System.out.println(count);
 		if(cookies != null && cookies.length>0) {
 			for(Cookie cookie :cookies) {
-
+				System.out.println(cookie.getName());
 				if(("HIT"+no).equals(cookie.getName())) {
 					count=1;
 				}
@@ -120,6 +121,7 @@ public class BoardController {
 		BoardVo vo = boardService.findByNo(no);
 		
 		model.addAttribute("vo", vo);
+		model.addAttribute("page", page);
 		return "board/view";
 	}
 	

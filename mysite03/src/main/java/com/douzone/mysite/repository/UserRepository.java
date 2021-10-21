@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,218 +22,35 @@ public class UserRepository {
 	@Autowired
 	private DataSource datasource;
 	
-	public UserVo findByEmailAndPassword(String email, String password){
-		UserVo vo = null;
+	@Autowired
+	private SqlSession sqlSession;
 		
-		PreparedStatement pstmt = null;
-		Connection conn = null;
-		ResultSet rs = null;
-		try {
-			
-			conn = datasource.getConnection();
-			
-			//3.SQL문 준비
-			String sql = "select no, name from user where email=? and password=?";
-			pstmt = conn.prepareStatement(sql);
-			
-			//4.바인딩(binding)
-			pstmt.setString(1, email);
-			pstmt.setString(2, password);
-			
-			//5.SQL 실행			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				Long no = rs.getLong(1);
-				String name = rs.getString(2);
-							
-				vo = new UserVo();
-				vo.setNo(no);
-				vo.setName(name);
-	
-			}
-	
-		} catch (SQLException e) {
-			System.out.println("error:"+e);
-		} finally {
-			try {
-				//clean up
-				if(rs != null) {
-					rs.close();
-				}
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(conn != null) {
-					conn.close();
-				}		
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+	public UserVo findByEmailAndPassword(String email, String password) throws UserRepositoryException {
 		
+		Map<String, String> map = new HashMap<>();
+		map.put("e", email);
+		map.put("p", password);
+		UserVo vo = sqlSession.selectOne("user.findByEmailAndPassword", map);
+
 		return vo;
 	}	
-	public boolean insert(UserVo vo) {
+	public boolean insert(UserVo vo) throws UserRepositoryException {
 		
-		boolean result = false;
-		PreparedStatement pstmt = null;
-		Connection conn = null;
+		int count = sqlSession.insert("user.insert",vo);
 		
-		try {
-			
-			conn = datasource.getConnection();
-			
-			//3.SQL문 준비
-			String sql = "insert into user values(null,?,?,?,?,now())";
-			pstmt = conn.prepareStatement(sql);
-			
-			//4.바인딩(binding)
-			pstmt.setString(1, vo.getName());
-			pstmt.setString(2, vo.getEmail());
-			pstmt.setString(3, vo.getPassword());
-			pstmt.setString(4, vo.getGender());
-			
-			//5.SQL 실행			
-			int count = pstmt.executeUpdate();
-			
-			result = count == 1;
-		} catch (SQLException e) {
-			System.out.println("error:"+e);
-		} finally {
-			try {
-				//clean up
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(conn != null) {
-					conn.close();
-				}		
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return result;
+		return count ==1;
 	}
 	
 
 	public UserVo findByNo(Long rcvNo) throws UserRepositoryException {
-		UserVo vo = null;
-		
-		PreparedStatement pstmt = null;
-		Connection conn = null;
-		ResultSet rs = null;
-		try {
 			
-			conn = datasource.getConnection();
-			
-			//3.SQL문 준비
-			String sql = "select no, name, email, gender from user where no =? ";
-			pstmt = conn.prepareStatement(sql);
-			
-			//4.바인딩(binding)
-			pstmt.setLong(1, rcvNo);
-
-			
-			//5.SQL 실행			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				Long no = rs.getLong(1);
-				String name = rs.getString(2);
-				String email = rs.getString(3);
-				String gender = rs.getString(4);
-							
-				vo = new UserVo();
-				vo.setNo(no);
-				vo.setName(name);
-				vo.setEmail(email);
-				vo.setGender(gender);
-	
-			}
-	
-		} catch (SQLException e) {
-			//System.out.println("error:"+e);
-			throw new UserRepositoryException(e.toString());
-		} finally {
-			try {
-				//clean up
-				if(rs != null) {
-					rs.close();
-				}
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(conn != null) {
-					conn.close();
-				}		
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return vo;
+		return sqlSession.selectOne("user.findByNo", rcvNo);
 	}
 	public boolean update(UserVo vo) {
 		
-		boolean result = false;
-		PreparedStatement pstmt = null;
-		Connection conn = null;
-		
-		try {
-			
-			conn = datasource.getConnection();
-			
-			if("".equals(vo.getPassword())) {
-				//3.SQL문 준비
-				String sql = "update user "
-						+ "set name = ?, "
-						+ "    gender = ? "
-						+ "where no = ? ";
-				pstmt = conn.prepareStatement(sql);
-				
-				//4.바인딩(binding)
-				pstmt.setString(1, vo.getName());
-				pstmt.setString(2, vo.getGender());
-				pstmt.setLong(3, vo.getNo());
-			} else {
-				//3.SQL문 준비
-				String sql = "update user "
-						+ "set name = ?, "
-						+ "password = ?, "
-						+ "    gender = ? "
-						+ "where no = ? ";
-				pstmt = conn.prepareStatement(sql);
-				
-				//4.바인딩(binding)
-				pstmt.setString(1, vo.getName());
-				pstmt.setString(2, vo.getPassword());
-				pstmt.setString(3, vo.getGender());
-				pstmt.setLong(4, vo.getNo());
-			}
-						
-			//5.SQL 실행			
-			int count = pstmt.executeUpdate();
-			
-			result = count == 1;
-		} catch (SQLException e) {
-			System.out.println("error:"+e);
-		} finally {
-			try {
-				//clean up
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(conn != null) {
-					conn.close();
-				}		
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return result;
+		int count = sqlSession.update("user.update",vo);
+	
+		return count ==1;
 	}
 	
 }

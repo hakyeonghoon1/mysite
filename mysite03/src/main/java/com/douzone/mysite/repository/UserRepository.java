@@ -1,11 +1,13 @@
 package com.douzone.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.exception.UserRepositoryException;
@@ -13,6 +15,9 @@ import com.douzone.mysite.vo.UserVo;
 
 @Repository
 public class UserRepository {
+	
+	@Autowired
+	private DataSource datasource;
 	
 	public UserVo findByEmailAndPassword(String email, String password){
 		UserVo vo = null;
@@ -22,7 +27,7 @@ public class UserRepository {
 		ResultSet rs = null;
 		try {
 			
-			conn = getConnection();
+			conn = datasource.getConnection();
 			
 			//3.SQL문 준비
 			String sql = "select no, name from user where email=? and password=?";
@@ -74,7 +79,7 @@ public class UserRepository {
 		
 		try {
 			
-			conn = getConnection();
+			conn = datasource.getConnection();
 			
 			//3.SQL문 준비
 			String sql = "insert into user values(null,?,?,?,?,now())";
@@ -109,22 +114,7 @@ public class UserRepository {
 		return result;
 	}
 	
-	private Connection getConnection() throws SQLException{
-		Connection conn =null;
-		
-		try {
-			//1.JDBC DRIVER 로딩
-			Class.forName("org.mariadb.jdbc.Driver");
-			
-			//2.연결하기
-			String  url ="jdbc:mysql://127.0.0.1:3306/webdb?charset=utf8";			
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-			
-		return conn;
-	}
+
 	public UserVo findByNo(Long rcvNo) throws UserRepositoryException {
 		UserVo vo = null;
 		
@@ -133,7 +123,7 @@ public class UserRepository {
 		ResultSet rs = null;
 		try {
 			
-			conn = getConnection();
+			conn = datasource.getConnection();
 			
 			//3.SQL문 준비
 			String sql = "select no, name, email, gender from user where no =? ";
@@ -190,7 +180,7 @@ public class UserRepository {
 		
 		try {
 			
-			conn = getConnection();
+			conn = datasource.getConnection();
 			
 			if("".equals(vo.getPassword())) {
 				//3.SQL문 준비
@@ -219,9 +209,7 @@ public class UserRepository {
 				pstmt.setString(3, vo.getGender());
 				pstmt.setLong(4, vo.getNo());
 			}
-			
-
-			
+						
 			//5.SQL 실행			
 			int count = pstmt.executeUpdate();
 			

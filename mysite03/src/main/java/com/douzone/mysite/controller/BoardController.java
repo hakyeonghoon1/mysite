@@ -188,7 +188,7 @@ public class BoardController {
 	public String reply(@PathVariable("groupNo") Long groupNo, @PathVariable("orderNo") Long orderNo,
 						@PathVariable("depth") Long depth, @PathVariable("no") Long no, Model model, @AuthUser UserVo authUser) {
 		//UserVo authUser = (UserVo)session.getAttribute("authUser");
-		BoardVo boardVo =boardService.findByNo(no);
+		//BoardVo boardVo =boardService.findByNo(no);
 		if(null != authUser) {
 			model.addAttribute("groupNo", groupNo);
 			model.addAttribute("orderNo", orderNo);

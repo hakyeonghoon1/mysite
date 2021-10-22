@@ -32,7 +32,6 @@ public class GalleryService {
 			String originFilename = multipartFile.getOriginalFilename();
 			String extName = originFilename.substring(originFilename.lastIndexOf(".")+1);
 			String saveFilename = generateSaveFilename(extName);
-			long fileSize = multipartFile.getSize();
 			
 			byte[] data = multipartFile.getBytes();
 			OutputStream os = new FileOutputStream(SAVE_PATH+"/"+saveFilename);
@@ -50,7 +49,6 @@ public class GalleryService {
 		} catch(IOException e) {
 			throw new RuntimeException("file upload error : "+e);
 		}
-		//return url;
 	}
 	
 	private String generateSaveFilename(String extName) {

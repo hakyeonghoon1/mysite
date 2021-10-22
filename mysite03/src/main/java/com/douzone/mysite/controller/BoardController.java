@@ -180,7 +180,7 @@ public class BoardController {
 						@PathVariable("depth") Long depth, @PathVariable("no") Long no, Model model, HttpSession session) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		BoardVo boardVo =boardService.findByNo(no);
-		if(boardVo.getUserNo() == authUser.getNo()) {
+		if(null != authUser) {
 			model.addAttribute("groupNo", groupNo);
 			model.addAttribute("orderNo", orderNo);
 			model.addAttribute("depth", depth);

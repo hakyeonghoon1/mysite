@@ -7,8 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.douzone.mysite.security.Auth;
+import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
@@ -60,23 +61,22 @@ public class UserController {
 		return "redirect:/";
 	}
 	*/		
+	
+	/*
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.removeAttribute("authUser");
 		session.invalidate();
 		return "redirect:/";
 	}
-	
-	
+	*/
 
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(HttpSession session, Model model) {
+	public String update(@AuthUser UserVo authUser, Model model) {
 		
 		// 접근제어(ACL)
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
+		//UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
 		Long no = authUser.getNo();
 		UserVo userVo = userService.getUser(no);
@@ -84,11 +84,12 @@ public class UserController {
 		return "user/update";
 	}
 	
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(HttpSession session, UserVo userVo) {
+	public String update(@AuthUser UserVo authUser, UserVo userVo) {
 		
 		// 접근제어(ACL)
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		//UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
 			return "redirect:/";
 		}

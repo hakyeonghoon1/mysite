@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.douzone.mysite.security.Auth;
+import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
@@ -38,21 +40,24 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.GET)
 	public String write(HttpSession session) {
 		// 접근제어(ACL)
+		/* @Auth
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
-			return "redirect:/";
+			return "redirect:/user/login";
 		}
-		
+		*/
 		return "board/write";
 	}
 	
+	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String write(HttpSession session, Long orderNo, Long groupNo, Long depth, String title, String content) {
+	public String write(@AuthUser UserVo authUser, Long orderNo, Long groupNo, Long depth, String title, String content) {
 		// 접근제어(ACL)
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		//UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
 			return "redirect:/";
 		}
@@ -125,9 +130,10 @@ public class BoardController {
 		return "board/view";
 	}
 	
+	@Auth
 	@RequestMapping(value="/update/{no}/{userNo}",method=RequestMethod.GET)
-	public String update(@PathVariable("no") Long no, @PathVariable("userNo") Long userNo, HttpSession session, Model model) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+	public String update(@PathVariable("no") Long no, @PathVariable("userNo") Long userNo, @AuthUser UserVo authUser, Model model) {
+		//UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
 		if(authUser.getNo() == userNo) {
 			BoardVo vo = boardService.findByNo(no);
@@ -138,9 +144,10 @@ public class BoardController {
 		}
 	}
 	
+	@Auth
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String update(HttpSession session, Model model, String title, String content,Long no ) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+	public String update(@AuthUser UserVo authUser, Model model, String title, String content,Long no ) {
+		//UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
 		if(authUser == null) {
 			return "redirect:/board?page=1";
@@ -155,10 +162,11 @@ public class BoardController {
 		return "redirect:/board/view/"+no;
 	}
 	
+	@Auth
 	@RequestMapping("/delete/{no}")
-	public String delete(@PathVariable("no") Long no, HttpSession session) {
+	public String delete(@PathVariable("no") Long no, @AuthUser UserVo authUser) {
 	
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		//UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
 			
 			return "redirect:/board?page=1";
@@ -175,10 +183,11 @@ public class BoardController {
 		return "redirect:/board?page=1";
 	}
 	
+	@Auth
 	@RequestMapping("/reply/{groupNo}/{orderNo}/{depth}/{no}")
 	public String reply(@PathVariable("groupNo") Long groupNo, @PathVariable("orderNo") Long orderNo,
-						@PathVariable("depth") Long depth, @PathVariable("no") Long no, Model model, HttpSession session) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+						@PathVariable("depth") Long depth, @PathVariable("no") Long no, Model model, @AuthUser UserVo authUser) {
+		//UserVo authUser = (UserVo)session.getAttribute("authUser");
 		BoardVo boardVo =boardService.findByNo(no);
 		if(null != authUser) {
 			model.addAttribute("groupNo", groupNo);

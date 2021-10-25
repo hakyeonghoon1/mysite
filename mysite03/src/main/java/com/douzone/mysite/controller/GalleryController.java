@@ -22,10 +22,10 @@ public class GalleryController {
 	
 	@RequestMapping("")
 	public String index(Model model) {
-//	
-//		List<GalleryVo> list  = galleryService.findAll();
-//		
-//		model.addAttribute("lists", list);
+	
+		List<GalleryVo> list  = galleryService.findAll();
+		
+		model.addAttribute("lists", list);
 		return "gallery/index";
 	}
 	

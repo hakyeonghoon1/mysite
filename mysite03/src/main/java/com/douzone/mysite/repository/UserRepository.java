@@ -30,22 +30,27 @@ public class UserRepository {
 
 		return vo;
 	}	
-	public boolean insert(UserVo vo) throws UserRepositoryException {
-		
-		int count = sqlSession.insert("user.insert",vo);
-		
-		return count ==1;
-	}
 	
-
 	public UserVo findByNo(Long rcvNo) throws UserRepositoryException {
-			
+		
 		return sqlSession.selectOne("user.findByNo", rcvNo);
 	}
 	public boolean update(UserVo vo) {
 		
 		int count = sqlSession.update("user.update",vo);
 	
+		return count ==1;
+	}
+	
+	public UserVo findByEmail(String email) {
+		
+		return sqlSession.selectOne("user.findByEmail", email);
+	}
+	
+	public boolean insert(UserVo vo) throws UserRepositoryException {
+		
+		int count = sqlSession.insert("user.insert",vo);
+		
 		return count ==1;
 	}
 	

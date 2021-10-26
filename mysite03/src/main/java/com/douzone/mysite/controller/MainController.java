@@ -16,9 +16,6 @@ import com.douzone.mysite.vo.SiteVo;
 @Controller
 public class MainController {
 
-	@Autowired
-	private AdminService adminService;
-	
 	@RequestMapping({"","/main"})
 	public String index(Model model) {
 

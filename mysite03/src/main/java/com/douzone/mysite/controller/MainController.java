@@ -21,8 +21,7 @@ public class MainController {
 	
 	@RequestMapping({"","/main"})
 	public String index(Model model) {
-		SiteVo siteVo = adminService.select();
-		model.addAttribute("siteVo", siteVo);
+
 		return "main/index";
 	}
 	

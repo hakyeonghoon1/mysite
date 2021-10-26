@@ -1,5 +1,7 @@
 package com.douzone.mysite.controller;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ import com.douzone.mysite.vo.SiteVo;
 public class AdminController {
 
 	@Autowired
+	ServletContext servletContext;
+	
+	@Autowired
 	private AdminService adminService;
 	
 	//@Auth(role="ADMIN")
@@ -24,6 +29,7 @@ public class AdminController {
 	public String main(Model model) {
 		
 		SiteVo siteVo = adminService.select();
+		servletContext.setAttribute("siteVo", siteVo);
 		model.addAttribute("siteVo", siteVo);
 		return "admin/main";
 	}

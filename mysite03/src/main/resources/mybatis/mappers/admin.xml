@@ -4,7 +4,11 @@
 <mapper namespace="admin">
 	<insert id="insert" parameterType="sitevo">
 		<![CDATA[
-			insert into site values(null, #{title }, #{welcome }, #{profile }, #{description })
+			insert into site (no, title, welcome, profile, description)
+			select null , #{title }, #{welcome }, ifnull(#{profile },profile), #{description }
+			from site
+			order by no desc
+			limit 1;
 		]]>
 	</insert>
 

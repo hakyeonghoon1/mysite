@@ -40,7 +40,7 @@ public class AdminController {
 						@RequestParam(value="file1") MultipartFile multipartFile) {
 		
 		adminService.insert(title,welcomeMessage,description,multipartFile);
-		return "redirect:/";
+		return "redirect:/admin";
 	}
 	
 	//@Auth(role="ADMIN")

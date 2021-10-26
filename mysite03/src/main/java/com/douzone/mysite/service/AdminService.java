@@ -24,9 +24,7 @@ public class AdminService {
 	public void insert(String title, String welcomeMessage, String description, MultipartFile multipartFile) {
 		String url =null;
 		try {
-			if(multipartFile.isEmpty()) {
-				return ;
-			}
+			
 			
 			String originFilename = multipartFile.getOriginalFilename();
 			String extName = originFilename.substring(originFilename.lastIndexOf(".")+1);
@@ -38,6 +36,10 @@ public class AdminService {
 			os.close();
 			
 			url = URL_BASE+"/"+saveFilename;
+			
+			if(multipartFile.isEmpty()) {
+				url =null;
+			}
 			
 			SiteVo vo = new SiteVo();
 			vo.setTitle(title);

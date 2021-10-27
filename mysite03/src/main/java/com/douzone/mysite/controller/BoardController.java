@@ -42,7 +42,7 @@ public class BoardController {
 	
 	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.GET)
-	public String write(HttpSession session) {
+	public String write(HttpSession session, Long page, String kwd, Model model) {
 		// 접근제어(ACL)
 		/* @Auth
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
@@ -50,6 +50,8 @@ public class BoardController {
 			return "redirect:/user/login";
 		}
 		*/
+		model.addAttribute("page", page);
+		model.addAttribute("kwd", kwd);
 		return "board/write";
 	}
 	

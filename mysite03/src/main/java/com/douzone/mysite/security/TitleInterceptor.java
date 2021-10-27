@@ -29,6 +29,7 @@ public class TitleInterceptor extends HandlerInterceptorAdapter{
 			servletContext.setAttribute("siteVo", vo);
 		}
 		servletContext.setAttribute("siteVo", vo);
+		
 		return true;
 	}
 

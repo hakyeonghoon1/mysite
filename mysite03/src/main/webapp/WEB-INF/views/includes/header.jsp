@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 		<div id="header">
-			<a href="${pageContext.request.contextPath }" style="text-decoration-line:none;"><h1>${siteVo.title }</h1></a>
+			<h1><a href="${pageContext.request.contextPath }" style="text-decoration-line:none;">${siteVo.title }</a></h1>
 			<ul>
 				<c:choose>
 					<c:when test="${empty authUser }">

@@ -88,7 +88,7 @@
 <!-- 		<property name="order" value="1" /> -->
 	</bean>
 	
-	 <!-- 6. MessageSource -->
+	<!-- 6. MessageSource -->
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			<list>

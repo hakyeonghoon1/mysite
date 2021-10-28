@@ -13,11 +13,11 @@ import com.douzone.config.web.FileUploadConfig;
 import com.douzone.config.web.MessageConfig;
 import com.douzone.config.web.MvcConfig;
 import com.douzone.config.web.SecurityConfig;
-import com.douzone.mysite.security.TitleInterceptor;
+import com.douzone.mysite.site.TitleInterceptor;
 
-@Configuration
+@Configuration		// 꼭 붙어야함
 @EnableAspectJAutoProxy
-@ComponentScan({"com.douzone.mysite.controller","com.douzone.mysite.exception"})
+@ComponentScan({"com.douzone.mysite.controller","com.douzone.mysite.exception"})		//scan
 @Import({MvcConfig.class, MessageConfig.class, FileUploadConfig.class, SecurityConfig.class})
 public class WebConfig extends WebMvcConfigurerAdapter{
 

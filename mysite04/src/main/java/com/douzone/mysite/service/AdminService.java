@@ -18,7 +18,7 @@ public class AdminService {
 	@Autowired
 	private AdminRepository adminRepository;
 	
-	private static String SAVE_PATH = "/gallery-images/";
+	private static String SAVE_PATH = "/upload-images/";
 	private static String URL_BASE = "/images";
 	
 	public void insert(String title, String welcomeMessage, String description, MultipartFile multipartFile) {

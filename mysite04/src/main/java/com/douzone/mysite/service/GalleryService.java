@@ -19,7 +19,7 @@ public class GalleryService {
 	@Autowired
 	private GalleryRepository galleryRepository;
 	
-	private static String SAVE_PATH = "/gallery-images/";
+	private static String SAVE_PATH = "/upload-images/";
 	private static String URL_BASE = "/images";
 	
 	public void restore(MultipartFile multipartFile, String comments) {

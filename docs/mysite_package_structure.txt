@@ -1,0 +1,41 @@
+[src]
+  |---[main]
+	|-------[java]
+	|	|--------com
+	|	|	|--------douzone
+	|	|	|	|------- config
+	|	|	|	|	|-------app
+	|	|	|	|	|	|----DBConfig.java
+	|	|	|	|	|	|----Mybatis.java
+	|	|	|	|	|-------web
+	|	|	|	|	|	|----MvcConfig.java
+	|	|	|	|	|	|----SecurityConfig.java
+	|	|	|	|	|	|----MessageConfig.java
+	|	|	|	|	|	|----FileuploadConfig.java
+
+	|	|	|	|------- mysite
+	|	|	|	|	|------controller
+	|	|	|	|	|------service
+	|	|	|	|	|------repository
+	|	|	|	|	|------vo
+	|	|	|	|	|------exception
+	|	|	|	|	|------aop
+	|	|	|	|	|------config
+	|	|	|	|	|	|------AppConfig.java
+	|	|	|	|	|	|------WebConfig.java
+	|------[resource]
+	|	|-------logback.xml
+	|	|--------com
+	|	|	|--------douzone
+	|	|	|	|------- mysite
+	|	|	|	|	|------- config
+	|	|	|	|	|	|--------app
+	|	|	|	|	|	|	|-------jdbc.properties
+	|	|	|	|	|	|	|-------mybatis
+	|	|	|	|	|	|	|	|--------configuration.xml
+	|	|	|	|	|	|	|	|--------mappers
+	|	|	|	|	|	|	|	|	|--------baord.xml
+	|	|	|	|	|	|	|	|	|--------user.xml
+	|	|	|	|	|	|--------web
+	|	|	|	|	|	|	|-----message_ko.properties
+	|	|	|	|	|	|	|-----fileupload.properties

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<select id="findByNo" parameterType="long" resultType="boardvo">
+		<![CDATA[
+			select no, title, contents, hit, reg_date as regDate, group_no as groupNo, order_no as orderNo, depth, user_no as userNo from board where no = #{no }
+		]]>
+	</select>
+
+	<select id="findByTitle" resultType="boardvo" parameterType="map">
+		<![CDATA[
+			select z.no as no, z.title as title, z.hit as hit, z.reg_date as regDate, z.group_no as groupNo, z.order_no as orderNo, z.depth as depth, z.user_no as userNo, z.name as userName, z.ROWNUM as rownum
+					from ( 
+					select @ROWNUM := @ROWNUM + 1 AS ROWNUM, x.* from 
+								(select a.no, a.title, a.hit, a.reg_date, a.group_no, a.order_no, a.depth, a.user_no, b.name 
+									from board a, user b  
+									where a.user_no = b.no 
+					 			and a.title like concat('%', #{keyword } ,'%') 
+									order by a.group_no asc, a.order_no desc 
+									limit 10000000000000000 
+								) x, (SELECT @ROWNUM := 0 ) y 
+					) z 
+					order by z.ROWNUM desc 
+					limit #{page }, 10 
+		]]>
+	</select>
+	
+	<select id="findByTitleQty" parameterType="string" resultType="long">
+		<![CDATA[
+			select count(*) from board where title like concat('%',#{keyword},'%') 
+		]]>
+	</select>
+	
+	<insert id="insert" parameterType="boardvo" >
+		<![CDATA[
+			insert into board(no, title, contents, hit, reg_date, group_no, order_no, depth, user_no) 
+			select null , #{title }, #{contents }, 0,now(), ifnull(max(group_no)+1,0), 0, 0, #{userNo }
+			from board
+		]]>
+	</insert>
+	
+	<insert id="insertReply" parameterType="boardvo" >
+		<![CDATA[
+			insert into board(no, title, contents, hit, reg_date, group_no, order_no, depth, user_no) 
+			values( null , #{title }, #{contents }, 0,now(), #{groupNo }, #{orderNo}+1, #{depth }+1, #{userNo }) 
+		]]>
+	</insert>
+	
+	<update id="update" parameterType="boardvo" >
+		<![CDATA[
+			update board 
+			set title = #{title}, 
+			contents = #{contents} 
+			where no = #{no}
+		]]>
+	</update>
+	
+	<update id="updateHit" parameterType="long" >
+		<![CDATA[
+			update board 
+			set hit = hit+1 
+			where no = #{no }
+		]]>
+	</update>
+	
+	<update id="updateNo" parameterType="boardvo" >
+		<![CDATA[
+			update board
+			set order_no = order_no +1 
+			where group_no = #{groupNo}
+			and order_no >= #{orderNo}+1 
+		]]>
+	</update>
+	
+	<delete id="delete" parameterType="boardvo" >
+		<![CDATA[
+			delete from board where no= #{no }
+		]]>
+	</delete>
+</mapper>

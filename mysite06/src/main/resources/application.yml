@@ -29,7 +29,7 @@ spring:
    # message resource(Interationalization)
    messages: 
       always-message-format: true
-      basename: message/messages_ko
+      basename: messages/messages_ko
       encoding: utf-8
 
    # multipart

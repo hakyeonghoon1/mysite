@@ -29,4 +29,19 @@ public class GuestbookService {
 		guestbookRepository.delete(vo);
 		
 	}
+
+	public List<GuestbookVo> getRecentList(Long lastNo) {
+		
+		return guestbookRepository.getRecentList(lastNo);
+	}
+
+	public List<GuestbookVo> getSPAList(Long startNo) {
+		
+		return guestbookRepository.getSPAList(startNo);
+	}
+
+	public GuestbookVo getCheckDelete(String password, Long no) {
+		
+		return guestbookRepository.getCheckDelete(password, no);
+	}
 }

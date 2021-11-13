@@ -19,9 +19,34 @@
 		]]>		
 	</delete>
 	
-	<select id="findAll" resultType="guestbookvo">
+	<select id="findList" resultType="guestbookvo">
 		<![CDATA[
-			select no, name, date_format(reg_date,'%Y/%m/%d %H:%i:%s') as regDate, message from guestbook order by reg_date desc
+			select no, name, date_format(reg_date,'%Y/%m/%d %H:%i:%s') as regDate, message from guestbook order by reg_date desc limit 3
+		]]>		
+	</select>
+	
+	<select id="getSPAList" resultType="guestbookvo" parameterType="map">		
+		<![CDATA[
+			select no, name, date_format(reg_date,'%Y/%m/%d %H:%i:%s') as regDate, message 
+			from guestbook 
+			where no < #{startNo }
+			order by reg_date desc
+			limit 3
+		]]>		
+	</select>
+	
+	<select id="getRecentList" resultType="guestbookvo" parameterType="long">
+		<![CDATA[
+			select no, name, date_format(reg_date,'%Y/%m/%d %H:%i:%s') as regDate, message from guestbook where no > #{lastNo } order by reg_date desc
+		]]>		
+	</select>
+	
+	<select id="getCheckDelete" resultType="guestbookvo" parameterType="map">
+		<![CDATA[
+			select no, name, date_format(reg_date,'%Y/%m/%d %H:%i:%s') as regDate, message, `password`
+			from guestbook
+			where no = #{no }
+			and `password` = #{password }
 		]]>		
 	</select>
 </mapper>

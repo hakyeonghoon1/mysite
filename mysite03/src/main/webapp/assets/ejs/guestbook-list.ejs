@@ -1,0 +1,12 @@
+<%
+	for(var i=0;i<data.length;i++){
+%>
+	<li data-no='<%=data[i].no%>'>
+		<strong><%=data[i].name%></strong>
+		<p><%=data[i].message%></p>
+		<strong><%=data[i].regDate%></strong>
+		<a href='' data-no='<%=data[i].no%>'>삭제</a> 
+	</li>
+<%
+	}
+%>
